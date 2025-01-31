@@ -1,4 +1,4 @@
-print("HEllo Wolrd")
+print("HEllo World")
 # Constants for time conversion
 SECONDS_IN_MINUTE = 60
 SECONDS_IN_HOUR = 60 * SECONDS_IN_MINUTE
