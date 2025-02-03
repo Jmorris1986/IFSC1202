@@ -24,5 +24,5 @@ hours = remaining_seconds // SECONDS_IN_HOUR
 print(f"Years: {years}")
 print(f"Days: {days}")
 print(f"Hours: {hours}")
-print(f"Minutes: {minutes}")
-print(f"Seconds: {seconds}")
+print(f"Minutes: {SECONDS_IN_MINUTE}")
+print(f"Seconds: {SECONDS_IN_DAY}")
