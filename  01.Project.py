@@ -18,14 +18,7 @@ remaining_seconds %= SECONDS_IN_DAY
 
 # Calculate the number of hours
 hours = remaining_seconds // SECONDS_IN_HOUR
-remaining_seconds %= SECONDS_IN_HOUR
 
-# Calculate the number of minutes
-minutes = remaining_seconds // SECONDS_IN_MINUTE
-remaining_seconds %= SECONDS_IN_MINUTE
-
-# The remaining seconds
-seconds = remaining_seconds
 
 # Display the results
 print(f"Years: {years}")
