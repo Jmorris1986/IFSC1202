@@ -21,7 +21,6 @@ def find_special_numbers(start, end):
         if is_special_number(num):
             print(num)
 
-# Example usage
 start_range = int(input("Enter start of range: "))
 end_range = int(input("Enter end of range: "))
 find_special_numbers(start_range, end_range)

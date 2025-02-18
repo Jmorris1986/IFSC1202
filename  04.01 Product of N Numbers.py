@@ -1,9 +1,7 @@
 # N is the numbeer of intergers to follow
 N: 5
-N = 4
-N = 5
-N = 1
-N = 3
-N = 2
-
+N = int(input("enter a number"))
+for i in range(1, N + 1):
+    print(i, i ** 2 )
+print("End of Loop")
 
