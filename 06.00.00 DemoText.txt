@@ -1,0 +1,2 @@
+Hello!\nWelcome to demofile.txt\nThis file is for testing purposes.\nGood Luck!
+print("line1\nline2\n\nline4")
