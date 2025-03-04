@@ -1,6 +1,10 @@
-# Prompt the user to put in the maximum height
-height = int(input("enter a maximum height:"))
+# Input the maximum height
+height = int(input("Enter maximum height: "))
 
-#Generate the pattern using a loop
+# First loop for the increasing pattern
 for i in range(1, height + 1):
-    print('x'* i)
+    print('* ' * i)
+
+# Second loop for the decreasing pattern
+for i in range(height - 1, 0, -1):
+    print('* ' * i)
