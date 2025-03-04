@@ -20,7 +20,7 @@ def merge_files():
                     output.write(line)  # Write the input line to the output file
 
                     # If we encounter the placeholder, insert the merge file content
-                    if '**Insert Merge File Here**' in line:
+                    if "**Insert Merge File Here**" in line:
                         for merge_line in merge:
                             merge_count += 1  # Count the merge file records
                             output.write(merge_line)  # Write the merge line to the output file
