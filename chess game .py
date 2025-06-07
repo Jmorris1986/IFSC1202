@@ -1,75 +1,67 @@
+pip install python-chess
 import chess
 import chess.engine
-import random
-
 
 def main():
+    print("Welcome to Chess: Person vs Computer!")
+    print("Type 'exit' to quit the game at any time.\n")
+
     # Initialize the chess board
     board = chess.Board()
-    moves_record = []  # To record all moves
-    print("Welcome to Chess! You are playing as White.")
-    print(board)
+    player_score = 0
+    computer_score = 0
 
-    while not board.is_game_over():
-        if board.turn:  # White's turn (Human)
+    # Initialize the chess engine (Stockfish)
+    with chess.engine.SimpleEngine.popen_uci("/usr/bin/stockfish") as engine:
+        while not board.is_game_over():
+            print(board)
+            print("\nYour move (e.g., e2e4): ", end="")
+            player_move = input().strip()
+
+            if player_move.lower() == "exit":
+                print("Game exited.")
+                break
+
             try:
-                user_move = input("Enter your move (e.g., e2e4): ")
-                move = chess.Move.from_uci(user_move)
+                move = chess.Move.from_uci(player_move)
                 if move in board.legal_moves:
                     board.push(move)
-                    moves_record.append(f"White: {user_move}")
-                    print("\nYour move:")
-                    print(board)
                 else:
-                    print("Invalid move. Please try again.")
-            except Exception as e:
-                print("Error:", e)
-                print("Please enter a valid move in UCI format (e.g., e2e4).")
-        else:  # Black's turn (Computer)
-            print("\nComputer's turn...")
-            legal_moves = list(board.legal_moves)
-            computer_move = random.choice(legal_moves)  # Random legal move
-            board.push(computer_move)
-            moves_record.append(f"Black: {computer_move.uci()}")
-            print("Computer played:")
-            print(board)
+                    print("Illegal move. Try again.")
+                    continue
+            except ValueError:
+                print("Invalid move format. Try again.")
+                continue
 
-    # Game over
-    print("\nGame Over!")
-    print("Final Board Position:")
-    print(board)
+            if board.is_game_over():
+                break
 
-    # Determine the result
-    if board.is_checkmate():
-        if board.turn:  # If it's White's turn and checkmate, Black wins
-            print("Checkmate! Black (Computer) wins!")
-            winner = "Black (Computer)"
-        else:  # If it's Black's turn and checkmate, White wins
-            print("Checkmate! White (You) win!")
-            winner = "White (You)"
-    elif board.is_stalemate():
-        print("It's a stalemate! The game is a draw.")
-        winner = "Draw"
-    elif board.is_insufficient_material():
-        print("Insufficient material! The game is a draw.")
-        winner = "Draw"
-    elif board.is_seventyfive_moves():
-        print("75-move rule applied! The game is a draw.")
-        winner = "Draw"
-    elif board.is_fivefold_repetition():
-        print("Fivefold repetition rule applied! The game is a draw.")
-        winner = "Draw"
-    else:
-        print("The game ended for an unknown reason.")
-        winner = "Unknown"
+            # Computer's move
+            print("\nComputer is thinking...")
+            result = engine.play(board, chess.engine.Limit(time=1.0))
+            board.push(result.move)
+            print(f"Computer played: {result.move}\n")
 
-    # Print the recorded moves
-    print("\nMoves Record:")
-    for move in moves_record:
-        print(move)
+        # Game over
+        print("\nGame Over!")
+        print(board)
+        if board.is_checkmate():
+            if board.turn:  # If it's the player's turn, computer won
+                print("Checkmate! Computer wins!")
+                computer_score += 1
+            else:  # If it's the computer's turn, player won
+                print("Checkmate! You win!")
+                player_score += 1
+        elif board.is_stalemate():
+            print("Stalemate! It's a draw.")
+        elif board.is_insufficient_material():
+            print("Draw due to insufficient material.")
+        elif board.is_seventyfive_moves():
+            print("Draw due to 75-move rule.")
+        elif board.is_fivefold_repetition():
+            print("Draw due to fivefold repetition.")
 
-    # Print the winner
-    print(f"\nWinner: {winner}")
+        print(f"\nFinal Score:\nPlayer: {player_score}\nComputer: {computer_score}")
 
 if __name__ == "__main__":
     main()
